@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load staticfiles %}
+	<meta charset="utf-8">
+	<title>快递查询测试</title>
+	<script src="{{ STATIC_URL }}js/clipboard.min.js"></script>
+</head>
+<body>
+{#{{ holiday_count }},{{ weekday_count }},{{ usually_count }}#}
+{#<iframe style="width: 100%;" height="380" src={{ json_str }}></iframe>#}
+<textarea id="bar" cols="62" rows="5" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">脚本之家是国内专业的网站建设资源、脚本编程学习类网站，提供asp、php、asp.net、javascript、jquery、vbscript、dos批处理、网页制作、网络编程、网站建设等编程资料。</textarea>
+
+<!-- Trigger -->
+<button class="btn" data-clipboard-action="copy" data-clipboard-target="#bar">
+	Cut to clipboard
+</button>
+<script>
+	var clipboard = new Clipboard('.btn');
+	clipboard.on('success', function (e) {
+		console.info('Action:', e.action);
+		console.info('Text:', e.text);
+		console.info('Trigger:', e.trigger);
+		alert("复制成功");
+		e.clearSelection();
+	});
+
+	clipboard.on('error', function (e) {
+		console.error('Action:', e.action);
+		console.error('Trigger:', e.trigger);
+	});
+</script>
+</body>
+</html>

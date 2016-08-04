@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+{% load dajaxice_templatetags %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>使用数据自我展示</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/AMap.DrivingRender1120.css"/>
+	{% dajaxice_js_import %}
+    <style>
+        #panel {
+            z-index: 999;
+            position: absolute;
+            background-color: white;
+            max-height: 100%;
+            overflow-y: auto;
+            right: 0;
+            width: 280px;
+        }
+    </style>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=45abc37b2dee4b2e3ecfc9e606d11210&plugin=AMap.Driving"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/DrivingRender1230.js"></script>
+{#    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>#}
+</head>
+<body>
+<div id="container"></div>
+<div id="panel"></div>
+<script type="text/javascript">
+{#    var map = new AMap.Map("container", {#}
+{#        resizeEnable: true#}
+{#    });#}
+    //驾车导航，您如果想修改结果展现效果，请参考页面：http://lbs.amap.com/fn/css-style/
+    var drivingOption = {
+        policy:AMap.DrivingPolicy.LEAST_TIME
+    };
+    var driving = new AMap.Driving(drivingOption); //构造驾车导航类
+    //根据起终点坐标规划驾车路线
+    {% for point in point_list %}
+	    driving.search([{{ point.0.0 }}, {{ point.0.1 }}], [{{ point.1.0 }}, {{ point.1.1 }}], function(status, result) {
+		    if (status === 'complete' && result.info === 'OK') {
+			    console.log(result);
+			    Dajaxice.untitled.get_length(function(json){
+				    console.log(json.status)
+			    },{"length":result.routes[0].distance});
+{#			    (new Lib.AMap.DrivingRender()).autoRender({#}
+{#				    data: result,#}
+{#				    map: map,#}
+{#				    panel: "panel"#}
+{#			    });#}
+		    } else {
+			    alert(result);
+		    }
+		});
+    {% endfor %}
+</script>
+</body>
+</html>

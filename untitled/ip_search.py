@@ -3,7 +3,7 @@ import time
 import urllib
 import re
 api = "http://panda.www.net.cn/cgi-bin/check.cgi?area_domain=%s"  # api地址
-string = "1234567890"                   # 所有字母
+string = "abcdefghigklmnopqrstuvwxyz1234567890"                   # 所有字母
 string_len = len(string)                                          # 长度
 import os
 module_dir = os.path.dirname(__file__)  # get current directory

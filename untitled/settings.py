@@ -19,6 +19,12 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
+        # 'NAME': 'untitled',                      # Or path to database file if using sqlite3.
+        # # The following settings are not used with sqlite3:
+        # 'USER': 'root',
+        # 'PASSWORD': '123456',
+        # 'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        # 'PORT': '3306',                      # Set to empty string for default.
     }
 }
 
@@ -34,7 +40,7 @@ TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-Hans'
 
 SITE_ID = 1
 
@@ -120,16 +126,18 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_docs',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'dajaxice',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'untitled'
+    'untitled',
+    # 'untitled.restful_demo'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
-
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

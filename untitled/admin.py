@@ -32,5 +32,5 @@ class DateChooseAdmin(admin.ModelAdmin):
 	search_fields = ('room_name',)
 	list_display = ('room_name', 'start_time', 'end_tiem', )
 
-admin.site.register(Holiday, HolidayAdmin)
-admin.site.register(DateChoose, DateChooseAdmin)
+# admin.site.register(Holiday, HolidayAdmin)
+# admin.site.register(DateChoose, DateChooseAdmin)

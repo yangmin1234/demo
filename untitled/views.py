@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
+from lxml import etree
 import urllib2
 import bs4
 import datetime
@@ -11,7 +12,7 @@ from django.template import RequestContext
 import requests
 # logger = logging.getLogger(__name__)
 import sys
-from untitled.models import Holiday, DateChoose
+from untitled.models import Holiday, DateChoose, support
 
 logger = logging.getLogger('spider')
 
@@ -186,3 +187,95 @@ def test_jsapi(request):
 
 def test_map(request):
 	return render_to_response("index.html", locals(), context_instance=RequestContext(request))
+
+api_url = "http://127.0.0.1:8003/api/user/"
+def test_api(request):
+	data = urllib.urlopen(api_url).read()
+	return HttpResponse(data)
+
+
+import time
+import urllib
+import re
+api = "http://panda.www.net.cn/cgi-bin/check.cgi?area_domain=%s"  # api地址
+string = "1234567890"                   # 所有字母
+string_len = len(string)                                          # 长度
+import os
+module_dir = os.path.dirname(__file__)  # get current directory
+fname = os.path.join(module_dir, 'name.txt')
+# fname = 'name.txt'                                                # 还没被注册的域名写入该文件
+suffix = '.com'                                                   # 域名后缀
+domain_lenth_range = range(3, 5)                                  # 字母组合的长度，3到5但不包括5
+
+
+def min(num):
+	"""初始化第一个值数字列表"""
+	name = []
+	for i in range(num):
+		name.append(0)
+	return name
+
+
+def max(num, max_num):
+	"""返回最大的值数字列表"""
+	name = []
+	for i in range(num):
+		name.append(max_num)
+	return name
+
+
+def num_2_string(name, string):
+	"""将数字列表转化为字母组合列表"""
+	new_name = []
+	for i in name:
+		new_name.append(string[i])
+	return ''.join(new_name)
+
+ip_daili = {"http": "http://183.129.178.14:8080"}
+def is_ava(domain):
+	"""判断该域名是否被注册"""
+	try:
+		data = urllib.urlopen(api % domain, proxies=ip_daili).read()
+		ava_pattern = re.compile(r'<original>(.*) : .*</original>')
+		perm_pattern = re.compile(r'Forbidden')
+		result = ava_pattern.findall(data)
+		if '210' in result:
+			print '%s ---------> Ok' % domain
+			return True
+		elif '211' in result:
+			print '%s ---------> No' % domain
+			return False
+		else:
+			print 'Forbidden'
+			return False
+	except:
+		return False
+
+
+def domain_name(num):
+	"""域名组合生成器"""
+	name = min(num)
+	last = max(num, string_len - 1)
+	while True:
+		yield num_2_string(name, string)
+		if name == last:
+			break
+		name[num - 1] += 1
+		while string_len in name:
+			index = name.index(string_len)
+			name[index] = 0
+			name[index - 1] += 1
+
+def run(domain_lenth):
+	"""执行，如果每被注册就写到文件中"""
+	f = open(fname, 'a')
+	for domain in domain_name(domain_lenth):
+		domain += suffix
+		if is_ava(domain):
+			f.write('%s\n' % domain)
+			f.flush()
+		time.sleep(0.5)
+
+
+def test_canvas(request):
+	return render_to_response("test_canvas.html", locals(), context_instance=RequestContext(request))

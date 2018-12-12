@@ -4,6 +4,7 @@ from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from untitled.views import *
+from untitled.test import *
 
 admin.autodiscover()
 dajaxice_autodiscover()
@@ -26,4 +27,11 @@ urlpatterns = patterns('',
     url(r'^test_webapi/', test_webapi),
     url(r'^test_jsapi/', test_jsapi),
     url(r'^test_map/', test_map),
+    url(r'^test_api/$', test_api),
+    url(r'^api/', include('untitled.restful_demo.urls')),
+    url(r'^docs/', include('rest_framework_docs.urls')),
+    url(r'test/$', test, name="test"),
+    url(r'test_callback/$', test_callback, name="test_callback"),
+    url(r'test_a/$', test_a, name="test_a"),
+    url(r'test_canvas/$', test_canvas, name="test_canvas"),
 )

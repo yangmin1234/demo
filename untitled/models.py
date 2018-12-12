@@ -23,3 +23,12 @@ class DateChoose(models.Model):
 	room_name = models.CharField(max_length=50, verbose_name="房间名称")
 	start_time = models.DateField(verbose_name="开始入住时间")
 	end_tiem = models.DateField(verbose_name="离开时间")
+
+
+class support(models.Model):
+	name = models.CharField(max_length=200, verbose_name="昵称")
+	price = models.CharField(max_length=20, verbose_name="金额")
+	image = models.CharField(max_length=500, verbose_name="头像")
+
+
+
